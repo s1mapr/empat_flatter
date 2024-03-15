@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_1/entities/user.dart';
+import 'dart:async';
+import 'package:project_1/pages/utils/barcode.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -7,79 +9,197 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  User user = User(firstName: 'Maksym', lastName: 'Prokopenko');
-
-  bool _isEditing = false;
-
-  TextEditingController _firstNameInput = TextEditingController();
-  TextEditingController _lastNameInput = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
-        title: Text("Project-1 by Prokopenko"),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "First name: ${user.firstName}",
-              style: TextStyle(fontSize: 20.0),
-            ),
-            Text(
-              "Last name: ${user.lastName}",
-              style: TextStyle(fontSize: 20.0),
-            ),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            _isEditing
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextField(
-                        controller: _firstNameInput,
-                        decoration: InputDecoration(labelText:"First name"),
-                      ),
-                      TextField(
-                        controller: _lastNameInput,
-                        decoration: InputDecoration(labelText:"Last name"),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20),
-                      ),
-                      Row(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                user.firstName = _firstNameInput.text;
-                                user.lastName = _lastNameInput.text;
-                                _isEditing = false;
-                              });
-                            },
-                            child: Text('Save'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                : ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _firstNameInput.text = user.firstName;
-                        _lastNameInput.text = user.lastName;
-                        _isEditing = true;
-                      });
-                    },
-                    child: Text('Edit'),
-                  ),
-          ],
+        leading: IconButton(
+          icon: const Icon(Icons.notifications_none_outlined),
+          color: Colors.red,
+          onPressed: () {},
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person_outlined),
+            color: Colors.red,
+            onPressed: () {},
+          ),
+        ],
       ),
+      body: Column(
+        children: [
+          Container(
+            color: Colors.grey,
+            child: ImageSlider(),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: BarcodeScreen(),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Text("Скануйте у відділенні"),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 40),
+            width: MediaQuery.of(context).size.width * 0.9,
+            decoration: BoxDecoration(
+              color: Colors.greenAccent,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            padding: const EdgeInsets.all(10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Купуйте за кордоном',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Знайомтесь із послугою NP Shopping',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.local_shipping_outlined,
+                              size: 36,
+                              color: Colors.red,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Мої \n посилки",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.language_outlined,
+                              size: 36,
+                              color: Colors.red,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Створити \n міжнародну посилку",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              size: 36,
+                              color: Colors.red,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Відділення \n та поштомати",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.add_outlined,
+                              size: 36,
+                              color: Colors.red,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Створити \n посилку",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ImageSlider extends StatefulWidget {
+  @override
+  _ImageSliderState createState() => _ImageSliderState();
+}
+
+class _ImageSliderState extends State<ImageSlider> {
+  int _currentIndex = 0;
+  final List<String> _images = [
+    'lib/images/1.png',
+    'lib/images/2.png',
+    'lib/images/3.png',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % _images.length;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      _images[_currentIndex],
+      fit: BoxFit.fill,
     );
   }
 }
