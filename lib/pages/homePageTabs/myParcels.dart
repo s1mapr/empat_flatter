@@ -1,36 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:project_1/entities/parcel.dart';
-import 'package:project_1/pages/parcel_details.dart';
-class Parcels extends StatefulWidget {
-  @override
-  _ParcelsState createState() => _ParcelsState();
-}
+import 'package:project_1/pages/parcelDetails.dart';
 
-class _ParcelsState extends State<Parcels> {
-  final parcels = ParcelItems();
+class Parcels extends StatelessWidget {
+  final parcels;
+
+  Parcels({required this.parcels});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Мої посилки",
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.add_outlined,
-              size: 30,
-            ),
-            color: Colors.red,
-            onPressed: () {},
-          ),
-        ],
-      ),
       body: Container(
         padding: const EdgeInsets.only(top: 30.0),
         decoration: BoxDecoration(
@@ -41,8 +20,11 @@ class _ParcelsState extends State<Parcels> {
           itemBuilder: (context, index) {
             final parcel = parcels.items[index];
             return ListTile(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ParcelDetails(parcelInfo: parcel)));
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ParcelDetails(parcelInfo: parcel)),
+                );
               },
               title: Container(
                 padding: const EdgeInsets.all(16.0),

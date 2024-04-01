@@ -1,35 +1,12 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:project_1/widgets/barcode.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
+import '../../widgets/imageSlider.dart';
 
-class _HomeState extends State<Home> {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Головна",
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none_outlined,
-              size: 30,
-            ),
-            color: Colors.red,
-            onPressed: () {},
-          ),
-        ],
-      ),
       body: Column(
         children: [
           Container(
@@ -78,53 +55,4 @@ class _HomeState extends State<Home> {
   }
 }
 
-class ImageSlider extends StatefulWidget {
-  @override
-  _ImageSliderState createState() => _ImageSliderState();
-}
 
-class _ImageSliderState extends State<ImageSlider> {
-  int _currentIndex = 0;
-  final List<String> _images = [
-    'assets/1.png',
-    'assets/2.png',
-    'assets/3.png',
-  ];
-
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _startTimer();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _startTimer();
-  }
-
-  void _startTimer() {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      setState(() {
-        _currentIndex = (_currentIndex + 1) % _images.length;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset(
-      _images[_currentIndex],
-      fit: BoxFit.fill,
-    );
-  }
-}

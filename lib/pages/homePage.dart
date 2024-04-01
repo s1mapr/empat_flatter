@@ -4,6 +4,9 @@ import 'package:project_1/pages/homePageTabs/myParcels.dart';
 import 'package:project_1/pages/homePageTabs/internationalParcels.dart';
 import 'package:project_1/pages/homePageTabs/location.dart';
 import 'package:project_1/widgets/customBottomNavBar.dart';
+import 'package:project_1/widgets/customDrawer.dart';
+
+import '../entities/parcel.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -13,98 +16,73 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
+
+  late ParcelItems parcels;
   int _selectedIndex = 0;
   late PageController _pageController;
+
+  List<Widget> _pages = [];
+
+  String getAppBarTitle(int index) {
+    switch (index) {
+      case 0:
+        return 'Головна';
+      case 1:
+        return 'Мої посилки';
+      case 2:
+        return 'Міжнародні посилки';
+      case 3:
+        return 'Відділення та поштомати';
+      default:
+        return '';
+    }
+  }
+
+
+  void addParcel(ParcelInfo parcelInfo) {
+    setState(() {
+      parcels.items.add(parcelInfo);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    parcels = ParcelItems();
+    _pages = [
+      Home(),
+      Parcels(parcels: parcels),
+      InternationalParcels(onPressed: addParcel,),
+      Location(),
+    ];
     _pageController = PageController(initialPage: _selectedIndex);
   }
-
-  final List<Widget> _pages = [
-    Home(),
-    Parcels(),
-    InternationalParcels(),
-    Location(),
-  ];
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const UserAccountsDrawerHeader(
-              accountName: Text('Максим Прокопенко'),
-              accountEmail: Text('s1maprokopenko@gmail.com'),
-              currentAccountPicture: CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/photo.jpg'),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.red,
-              ),
-            ),
-            ListTile(
-              title: const Text('Профіль'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Налаштування'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Розрахувати доставку'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Послуга Експрес драйв'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Викликати кур\'єра'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Про компанію'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Новини'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Центр підтримки'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Документація'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.red),
+        title: Text(
+          getAppBarTitle(_selectedIndex),
+          style: const TextStyle(
+            fontSize: 20,
+          ),
         ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.notifications_none_outlined,
+              size: 30,
+            ),
+            color: Colors.red,
+            onPressed: () {},
+          ),
+        ],
       ),
+      drawer: const CustomDrawer(),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {

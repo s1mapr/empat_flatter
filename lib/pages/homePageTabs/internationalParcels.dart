@@ -1,23 +1,22 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:project_1/entities/parcel.dart';
 
-class InternationalParcels extends StatefulWidget {
-  @override
-  _InternationalParcelsState createState() => _InternationalParcelsState();
-}
+class InternationalParcels extends StatelessWidget {
+  final Function onPressed;
 
-class _InternationalParcelsState extends State<InternationalParcels> {
+  InternationalParcels({required this.onPressed});
+
+  String formatDate(DateTime date) {
+    String day = date.day.toString().padLeft(2, '0');
+    String month = date.month.toString().padLeft(2, '0');
+    String year = date.year.toString();
+    return '$day.$month.$year';
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Створити",
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: true,
-      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.only(top: 10.0),
@@ -113,7 +112,7 @@ class _InternationalParcelsState extends State<InternationalParcels> {
                         Text(
                           "До 2 кг | 35x20x10 см",
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
                       ],
                     ),
@@ -142,7 +141,7 @@ class _InternationalParcelsState extends State<InternationalParcels> {
                         Text(
                           "До 10 кг | 40x30x30 см",
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
                       ],
                     ),
@@ -171,7 +170,7 @@ class _InternationalParcelsState extends State<InternationalParcels> {
                         Text(
                           "До 30 кг | 60x50x40 см",
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
                       ],
                     ),
@@ -183,7 +182,21 @@ class _InternationalParcelsState extends State<InternationalParcels> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                int id = Random().nextInt(99999999 - 1000000) + 1000000;
+                DateTime currentDate = DateTime.now();
+                DateTime dateAfterTwoDays = currentDate.add(const Duration(days: 2));
+                String dateFrom = formatDate(currentDate);
+                String dateTo = formatDate(dateAfterTwoDays);
+
+                onPressed(ParcelInfo(
+                  id: id.toString(),
+                  dateFrom: dateFrom,
+                  dateTo: dateTo,
+                  cityFrom: "Україна",
+                  cityTo: "Польща",
+                ));
+              },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
