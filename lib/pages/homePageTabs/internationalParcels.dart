@@ -2,18 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:project_1/entities/parcel.dart';
+import 'package:project_1/model/parcelsModel.dart';
+import 'package:provider/provider.dart';
 
 class InternationalParcels extends StatelessWidget {
-  final Function onPressed;
-
-  InternationalParcels({required this.onPressed});
-
   String formatDate(DateTime date) {
     String day = date.day.toString().padLeft(2, '0');
     String month = date.month.toString().padLeft(2, '0');
     String year = date.year.toString();
     return '$day.$month.$year';
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +111,7 @@ class InternationalParcels extends StatelessWidget {
                         Text(
                           "До 2 кг | 35x20x10 см",
                           style:
-                          TextStyle(fontSize: 14, color: Colors.grey[600]),
+                              TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
                       ],
                     ),
@@ -141,7 +140,7 @@ class InternationalParcels extends StatelessWidget {
                         Text(
                           "До 10 кг | 40x30x30 см",
                           style:
-                          TextStyle(fontSize: 14, color: Colors.grey[600]),
+                              TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
                       ],
                     ),
@@ -170,7 +169,7 @@ class InternationalParcels extends StatelessWidget {
                         Text(
                           "До 30 кг | 60x50x40 см",
                           style:
-                          TextStyle(fontSize: 14, color: Colors.grey[600]),
+                              TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
                       ],
                     ),
@@ -185,11 +184,12 @@ class InternationalParcels extends StatelessWidget {
               onPressed: () {
                 int id = Random().nextInt(99999999 - 1000000) + 1000000;
                 DateTime currentDate = DateTime.now();
-                DateTime dateAfterTwoDays = currentDate.add(const Duration(days: 2));
+                DateTime dateAfterTwoDays =
+                    currentDate.add(const Duration(days: 2));
                 String dateFrom = formatDate(currentDate);
                 String dateTo = formatDate(dateAfterTwoDays);
-
-                onPressed(ParcelInfo(
+                Provider.of<ParcelsModel>(context, listen: false)
+                    .addParcel(ParcelInfo(
                   id: id.toString(),
                   dateFrom: dateFrom,
                   dateTo: dateTo,
@@ -204,7 +204,8 @@ class InternationalParcels extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-                minimumSize: MaterialStateProperty.all<Size>(const Size(360, 70)),
+                minimumSize:
+                    MaterialStateProperty.all<Size>(const Size(360, 70)),
               ),
               child: const Text(
                 "Продовжити",

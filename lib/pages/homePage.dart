@@ -6,8 +6,6 @@ import 'package:project_1/pages/homePageTabs/location.dart';
 import 'package:project_1/widgets/customBottomNavBar.dart';
 import 'package:project_1/widgets/customDrawer.dart';
 
-import '../entities/parcel.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,7 +15,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
 
-  late ParcelItems parcels;
   int _selectedIndex = 0;
   late PageController _pageController;
 
@@ -39,20 +36,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
 
-  void addParcel(ParcelInfo parcelInfo) {
-    setState(() {
-      parcels.items.add(parcelInfo);
-    });
-  }
+
 
   @override
   void initState() {
     super.initState();
-    parcels = ParcelItems();
     _pages = [
       Home(),
-      Parcels(parcels: parcels),
-      InternationalParcels(onPressed: addParcel,),
+      Parcels(),
+      InternationalParcels(),
       Location(),
     ];
     _pageController = PageController(initialPage: _selectedIndex);
