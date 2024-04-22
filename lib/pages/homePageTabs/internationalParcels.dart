@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1/entities/parcel.dart';
 import 'package:project_1/model/parcelsModel.dart';
@@ -7,7 +8,10 @@ import 'package:provider/provider.dart';
 
 import '../../model/themeModel.dart';
 
+@RoutePage()
 class InternationalParcels extends StatelessWidget {
+  const InternationalParcels({super.key});
+
   String formatDate(DateTime date) {
     String day = date.day.toString().padLeft(2, '0');
     String month = date.month.toString().padLeft(2, '0');

@@ -27,4 +27,10 @@ public class ParcelController {
         List<Parcel> parcels = parcelService.getAllParcels();
         return new ResponseEntity<>(parcels, HttpStatus.OK);
     }
+
+    @GetMapping("/word")
+    public ResponseEntity<String> getWord(@RequestParam("w") String word){
+        String result = word.toUpperCase();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

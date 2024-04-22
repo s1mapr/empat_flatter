@@ -1,9 +1,11 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1/model/parcelsModel.dart';
 import 'package:project_1/model/themeModel.dart';
 import 'package:project_1/pages/parcelDetails.dart';
 import 'package:provider/provider.dart';
 
+@RoutePage()
 class Parcels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,13 +24,15 @@ class Parcels extends StatelessWidget {
               itemBuilder: (context, index) {
                 final parcel = parcelInfo.parcels.items[index];
                 return ListTile(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
                               ParcelDetails(parcelInfo: parcel)),
                     );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('ID of parcel: $result')));
                   },
                   title: Container(
                     padding: const EdgeInsets.all(16.0),

@@ -15,6 +15,13 @@ class ParcelDetails extends StatelessWidget {
       builder: (context, theme, child) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context, '${parcelInfo.id}');
+              },
+            ),
             backgroundColor: theme.isDark
                 ? const Color.fromRGBO(55, 55, 55, 1.0)
                 : Colors.white,
@@ -120,7 +127,7 @@ class ParcelDetails extends StatelessWidget {
                         ? const Color.fromRGBO(55, 55, 55, 1.0)
                         : Colors.white,
                   ),
-                  child:  Row(
+                  child: Row(
                     children: [
                       Text(
                         "Послуги з доставки",
@@ -149,7 +156,9 @@ class ParcelDetails extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     "ОТРИМАТИ ПОВНУ ІНФОРМАЦІЮ ПРО ПОСИЛКУ",
-                    style: TextStyle(color: theme.isDark? Colors.grey[500] :Colors.grey[800]),
+                    style: TextStyle(
+                        color:
+                            theme.isDark ? Colors.grey[500] : Colors.grey[800]),
                   ),
                 )
               ],

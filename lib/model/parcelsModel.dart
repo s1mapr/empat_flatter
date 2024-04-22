@@ -6,9 +6,10 @@ import '../entities/parcel.dart';
 
 class ParcelsModel extends ChangeNotifier {
   ParcelItems _parcels = ParcelItems();
-
-  ParcelItems get parcels{
+  ParcelsModel() {
     getParcels();
+  }
+  ParcelItems get parcels{
     return _parcels;
   }
 
@@ -39,6 +40,5 @@ class ParcelsModel extends ChangeNotifier {
     } catch (e) {
       print('Connection error: $e');
     }
-    getParcels();
   }
 }
