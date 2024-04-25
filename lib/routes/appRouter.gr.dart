@@ -66,7 +66,7 @@ abstract class $AppRouter extends AutoRoute.RootStackRouter {
     NPShoppingRoute.name: (routeData) {
       return AutoRoute.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const NPShopping(),
+        child: NPShopping(),
       );
     },
   };
